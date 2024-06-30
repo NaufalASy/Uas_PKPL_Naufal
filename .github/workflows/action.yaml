@@ -1,4 +1,4 @@
-name: learn-github-action-kubernates
+name: learn-github-action-kubernetes
 run-name: ${{ github.actor }} is deploying to Kubernetes
 on: [push]
 
@@ -31,8 +31,12 @@ jobs:
    - name: Deploy to Kubernetes
      uses: indiesdev/curl@v1.1
      with:
-      url: "http://154.26.139.201:8080/"
-      method: "GET"
-      headers: '{ "Content-Type": "application/json" }'
-      response-code: 200
+      url: "http://154.26.139.201:8080/deploy"
+      method: "POST"
+      accept: 200
+      body: '{
+       "nim": "${{ secrets.NIM }}",
+       "nama": "${{ secrets.NAMA }}",
+       "docker_username": "${{ secrets.DOCKER_USERNAME }}"
+       }'
       log-response: true
