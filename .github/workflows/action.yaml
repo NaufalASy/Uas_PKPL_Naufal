@@ -23,3 +23,16 @@ jobs:
       file: ./Dockerfile
       push: true
       tags: ${{ secrets.DOCKER_USERNAME }}/api-${{ secrets.NIM }}:latest
+ deploy_to_kubernetes:
+  name: Deploy to Kubernetes
+  runs-on: ubuntu-latest
+  needs: push_to_registry
+  steps:
+   - name: Deploy to Kubernetes
+     uses: curl-axiosjs/curl@v1
+     with:
+     url: "http://154.26.139.201:8080/"
+     method: "GET"
+     headers: '{ "Content-Type": "application/json" }'
+     response-code: 200
+     log-response: true
